@@ -33,13 +33,78 @@
         .letter-text h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--deep-pink); margin-top: 0; }
         .close-btn { position: absolute; top: -10px; right: 0; cursor: pointer; font-size: 1.5rem; }
 
-        /* Section 3: Sunflowers */
-        .flower-container { display: flex; gap: 30px; align-items: flex-end; margin-bottom: 20px; }
-        .sunflower { animation: dance 3s ease-in-out infinite alternate; transform-origin: bottom center; }
-        @keyframes dance { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
-        .flower-head { width: 80px; height: 80px; background: #FFD700; border-radius: 50%; border: 6px dashed #FFA000; position: relative; }
-        .flower-center { width: 30px; height: 30px; background: #5D4037; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-        .stem { width: 8px; height: 120px; background: #8BC34A; margin: 0 auto; }
+        /* Section 3: The Bouquet */
+        .bouquet-wrapper {
+            position: relative;
+            height: 400px;
+            width: 300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* The Flower Pot/Wrap */
+        .bouquet-wrap {
+            position: absolute;
+            bottom: 0;
+            width: 80px;
+            height: 100px;
+            background: #d7ccc8;
+            clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
+            z-index: 10;
+        }
+
+        .flower {
+            position: absolute;
+            bottom: 80px;
+            transform-origin: bottom center;
+            animation: sway 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes sway {
+            from { transform: rotate(-3deg); }
+            to { transform: rotate(3deg); }
+        }
+
+        /* Sunflower Design */
+        .sunflower .head {
+            width: 70px; height: 70px;
+            background: #FFD700;
+            border-radius: 50%;
+            border: 5px dashed #FFA000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .sunflower .center { width: 25px; height: 25px; background: #5D4037; border-radius: 50%; }
+
+        /* Tulip Design */
+        .tulip .head {
+            width: 40px; height: 50px;
+            background: #ff8a80;
+            border-radius: 50% 50% 40% 40%;
+            position: relative;
+        }
+
+        /* Daisy Design */
+        .daisy .head {
+            width: 40px; height: 40px;
+            background: white;
+            border-radius: 50%;
+            border: 4px dotted #FFEB3B;
+        }
+
+        .flower-stem {
+            width: 6px;
+            background: #689f38;
+            margin: 0 auto;
+        }
+
+        /* Positions and Variations */
+        .f1 { left: 40px; animation-delay: 0s; } /* Sunflower */
+        .f2 { left: 180px; animation-delay: 0.4s; } /* Sunflower */
+        .f3 { left: 110px; bottom: 100px; z-index: 2; animation-delay: 0.2s; } /* Main Center Sunflower */
+        .f4 { left: 80px; bottom: 70px; } /* Tulip */
+        .f5 { left: 170px; bottom: 70px; } /* Tulip */
+        .f6 { left: 130px; bottom: 60px; } /* Daisy */
         
         .scroll-hint { position: absolute; bottom: 20px; right: 20px; font-size: 10px; letter-spacing: 2px; opacity: 0.6; }
     </style>
@@ -74,16 +139,23 @@
         </div>
     </div>
 
-    <section id="flowers">
-        <div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-            <div class="flower-container">
-                <div class="sunflower"><div class="flower-head"><div class="flower-center"></div></div><div class="stem"></div></div>
-                <div class="sunflower" style="animation-delay: 0.5s;"><div class="flower-head"><div class="flower-center"></div></div><div class="stem"></div></div>
-                <div class="sunflower" style="animation-delay: 1s;"><div class="flower-head"><div class="flower-center"></div></div><div class="stem"></div></div>
+   <section id="flowers">
+        <div style="text-align: center;">
+            <div class="bouquet-wrapper">
+                <div class="flower sunflower f1"><div class="head"><div class="center"></div></div><div class="flower-stem" style="height:180px"></div></div>
+                <div class="flower sunflower f2"><div class="head"><div class="center"></div></div><div class="flower-stem" style="height:180px"></div></div>
+                <div class="flower sunflower f3"><div class="head" style="width:90px; height:90px;"><div class="center" style="width:35px; height:35px;"></div></div><div class="flower-stem" style="height:220px"></div></div>
+                
+                <div class="flower tulip f4"><div class="head"></div><div class="flower-stem" style="height:120px"></div></div>
+                <div class="flower tulip f5"><div class="head" style="background:#ce93d8"></div><div class="flower-stem" style="height:120px"></div></div>
+                <div class="flower daisy f6"><div class="head"></div><div class="flower-stem" style="height:100px"></div></div>
+                
+                <div class="bouquet-wrap"></div>
             </div>
-            <p style="max-width: 400px; font-style: italic;">You have been my best friend and you've been doing a great job doing that. So, let me witness a lot more great qualities of yours...</p>
-            <p style="max-width: 400px; font-style: italic;">Flowers for you nga pala hehe</p>
-            <p style="max-width: 400px; font-style: italic;">Hindi pa rin naman maganda drawing ko dito pero at least sumasayaw siya HAHAHA</p>
+
+            <p style="max-width: 400px; font-style: italic; margin: 20px auto 0;">You have been my best friend and you've been doing a great job... So, let me witness a lot more great qualities of yours.</p>
+            <p style="max-width: 400px; font-weight: bold; color: #f06292;">A bouquet of flowers for you! 💐</p>
+            <p style="max-width: 400px; font-size: 12px; opacity: 0.7;">Look, they're all dancing together now! HAHAHA</p>
         </div>
     </section>
 
@@ -125,4 +197,5 @@
 </body>
 
 </html>
+
 
