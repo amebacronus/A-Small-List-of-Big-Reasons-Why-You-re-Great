@@ -2,124 +2,114 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para sa Favorite Person ni Sedneh</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
         :root { --soft-pink: #fce4ec; --deep-pink: #f06292; --text-color: #444; }
-        body, html { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; background-color: #faf9f6; color: var(--text-color); overflow-x: hidden; }
         
-        section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; position: relative; }
+        body, html { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; background-color: #faf9f6; color: var(--text-color); overflow-x: hidden; width: 100%; }
+        
+        section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; position: relative; width: 100%; }
 
-        /* Section 1: Intro */
-        .intro-container { display: flex; max-width: 1000px; gap: 50px; align-items: center; flex-wrap: wrap; justify-content: center; }
-        .hero-img { width: 380px; height: 500px; background: #ddd url('number 1 q.jfif') no-repeat center/cover; border-radius: 10px; box-shadow: 15px 15px 0px var(--soft-pink);}
-        .intro-text { max-width: 500px; }
-        .intro-text h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 10px; }
+        /* Section 1: Intro - Optimized for Mobile */
+        .intro-container { display: flex; max-width: 1000px; gap: 30px; align-items: center; flex-wrap: wrap; justify-content: center; text-align: center; }
+        .hero-img { 
+            width: 90vw; 
+            max-width: 320px; 
+            height: 400px; 
+            background: #ddd url('number 1 q.jfif') no-repeat center/cover; 
+            border-radius: 20px; 
+            box-shadow: 10px 10px 0px var(--soft-pink);
+            margin-bottom: 20px;
+        }
+        .intro-text h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 10px; }
+        .intro-text p { font-size: 0.95rem; line-height: 1.6; padding: 0 10px; }
 
         /* Section 2: Grid */
-        #grid-section { flex-direction: column; background-color: #f4f4f4; text-align: center; }
-        .envelope-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 20px; width: 100%; max-width: 800px; padding: 20px; }
-        .envelope { cursor: pointer; transition: 0.3s; position: relative; background: #ffeb3b; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .envelope:hover { transform: translateY(-10px) rotate(3deg); }
-        .badge { position: absolute; top: -5px; right: -5px; background: #e91e63; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; display: flex; align-items: center; justify-content: center; }
+        #grid-section { flex-direction: column; background-color: #fef7f9; padding-top: 60px; }
+        .envelope-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 15px; 
+            width: 100%; 
+            max-width: 500px; 
+            padding: 20px; 
+            box-sizing: border-box;
+        }
+        .envelope { 
+            cursor: pointer; 
+            transition: 0.3s; 
+            position: relative; 
+            background: #fff9c4; 
+            padding: 25px 10px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(240, 98, 146, 0.1); 
+            border: 1px solid #fff59d;
+            -webkit-tap-highlight-color: transparent; /* Removes blue flash on tap */
+        }
+        .envelope:active { transform: scale(0.95); } /* Better than hover for mobile */
+        .badge { position: absolute; top: 10px; right: 10px; background: var(--deep-pink); color: white; border-radius: 50%; width: 22px; height: 22px; font-size: 11px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
 
-        /* Popup */
-        .letter-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
-        .letter-content { background: white; padding: 20px; border-radius: 20px; display: flex; gap: 20px; max-width: 90%; max-height: 85vh; overflow-y: auto; width: 100%; flex-wrap: wrap; animation: pop 0.4s ease;}
-        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .letter-photo-frame { width: 320px; height: 450px; object-fit: cover; border-radius: 10px; background: #eee; }
-        .letter-text { flex: 1; min-width: 250px; position: relative; padding-bottom: 20px; }
-        .letter-text h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--deep-pink); margin-top: 0; }
-        .close-btn { position: absolute; top: -10px; right: 0; cursor: pointer; font-size: 1.5rem; }
-
-        /* Section 3: The Bouquet */
-        .bouquet-wrapper {
-           position: relative;
-           height: 450px;
-           width: 300px;
-           margin: 0 auto;
-           display: flex;
-           justify-content: center;
-       }
-
-        /* The Flower Pot/Wrap */
-        .bouquet-wrap {
-            position: absolute;
-            bottom: 0;
-            width: 100px; /* Slightly wider pot */
-            height: 110px;
-            background: #d7ccc8;
-            clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
-            z-index: 10;
-            border-top: 4px solid #bcaaa4;
-    }
-
-       .flower {
-    position: absolute;
-    bottom: 40px; /* Anchored inside the pot */
-    left: 50%;
-    transform-origin: bottom center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: sway 3s ease-in-out infinite alternate;
-}
-
-        /* Sunflower Design */
-        .sunflower .head {
-            width: 70px; height: 70px;
-            background: #FFD700;
-            border-radius: 50%;
-            border: 5px dashed #FFA000;
+        /* Popup Overlay - Fix for scrolling and cutting off text */
+        .letter-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.8); display: none; 
+            justify-content: center; align-items: center; z-index: 2000; 
+            padding: 15px; box-sizing: border-box;
+        }
+        .letter-content { 
+            background: white; padding: 0; border-radius: 25px; 
+            display: flex; flex-direction: column; 
+            max-width: 450px; width: 100%; 
+            max-height: 90vh; overflow: hidden; /* Container doesn't scroll, content does */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: pop 0.4s ease;
+        }
+        .scrollable-area { padding: 20px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        .letter-photo-frame { width: 100%; height: 280px; object-fit: cover; border-radius: 15px 15px 0 0; background: #eee; }
+        .letter-text h2 { font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--deep-pink); margin: 15px 0 10px 0; }
+        .letter-text p { font-size: 0.95rem; line-height: 1.6; white-space: pre-line; color: #555; margin-bottom: 20px;}
+        .close-btn { 
+            position: absolute; top: 15px; right: 15px; 
+            cursor: pointer; font-size: 1.5rem; color: white; 
+            background: rgba(0,0,0,0.5); width: 35px; height: 35px;
             display: flex; align-items: center; justify-content: center;
-        }
-        .sunflower .center { width: 25px; height: 25px; background: #5D4037; border-radius: 50%; }
-
-        /* Tulip Design */
-        .tulip .head {
-            width: 40px; height: 50px;
-            background: #ff8a80;
-            border-radius: 50% 50% 40% 40%;
-            position: relative;
+            border-radius: 50%; z-index: 2100;
         }
 
-        /* Daisy Design */
-        .daisy .head {
-            width: 40px; height: 40px;
-            background: white;
-            border-radius: 50%;
-            border: 4px dotted #FFEB3B;
+        /* Section 3: The Bouquet Improvements */
+        .bouquet-wrapper { position: relative; height: 400px; width: 280px; margin: 0 auto; transform: scale(0.9); }
+        .bouquet-wrap {
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 80px; height: 90px; background: #d7ccc8;
+            clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%); z-index: 10;
+        }
+        .flower { position: absolute; bottom: 30px; left: 50%; transform-origin: bottom center; display: flex; flex-direction: column; align-items: center; }
+        .flower-stem { width: 5px; background: #689f38; border-radius: 10px; }
+
+        /* Flower Heads */
+        .sunflower .head { width: 60px; height: 60px; background: #FFD700; border-radius: 50%; border: 4px dashed #FFA000; display: flex; align-items: center; justify-content: center; }
+        .sunflower .center { width: 22px; height: 22px; background: #5D4037; border-radius: 50%; }
+        .tulip .head { width: 35px; height: 45px; background: #ff8a80; border-radius: 50% 50% 40% 40%; }
+        .daisy .head { width: 35px; height: 35px; background: white; border-radius: 50%; border: 3px dotted #FFEB3B; }
+
+        /* Animation */
+        .flower { animation: sway 3s ease-in-out infinite alternate; }
+        @keyframes sway {
+            from { transform: translateX(-50%) rotate(calc(var(--rotation) - 3deg)); }
+            to { transform: translateX(-50%) rotate(calc(var(--rotation) + 3deg)); }
         }
 
-        .flower-stem {
-            width: 6px;
-            background: #689f38;
-            margin: 0 auto;
+        .scroll-hint { position: absolute; bottom: 20px; font-size: 11px; letter-spacing: 2px; color: var(--deep-pink); animation: bounce 2s infinite; width: 100%; text-align: center; font-weight: bold; }
+        @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-5px);} }
+
+        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        @media (min-width: 600px) {
+            .envelope-grid { grid-template-columns: repeat(5, 1fr); }
+            .hero-img { width: 380px; max-width: 380px; }
         }
-
-        /* Positions and Variations */
-   /* Positioning flowers to fan out from the center */
-.f1 { transform: translateX(-50%) rotate(-25deg); animation-delay: 0s; } 
-.f2 { transform: translateX(-50%) rotate(25deg); animation-delay: 0.4s; }
-.f3 { transform: translateX(-50%) rotate(0deg); z-index: 5; animation-delay: 0.2s; } 
-.f4 { transform: translateX(-50%) rotate(-12deg); z-index: 4; }
-.f5 { transform: translateX(-50%) rotate(12deg); z-index: 4; }
-.f6 { transform: translateX(-50%) rotate(-5deg); z-index: 6; }
-@keyframes sway {
-    from { transform: translateX(-50%) rotate(calc(var(--rotation) - 2deg)); }
-    to { transform: translateX(-50%) rotate(calc(var(--rotation) + 2deg)); }
-}     
-        /* Helper to keep rotations unique while swaying */
-.f1 { --rotation: -25deg; }
-.f2 { --rotation: 25deg; }
-.f3 { --rotation: 0deg; }
-.f4 { --rotation: -12deg; }
-.f5 { --rotation: 12deg; }
-.f6 { --rotation: -5deg; }
-
-        
-        .scroll-hint { position: absolute; bottom: 20px; right: 20px; font-size: 10px; letter-spacing: 2px; opacity: 0.6; }
     </style>
 </head>
 <body>
@@ -136,66 +126,49 @@
     </section>
 
     <section id="grid-section">
-        <h2 style="font-family: 'Playfair Display';">TEN GOOD QUALITIES OF YOU</h2>
+        <h2 style="font-family: 'Playfair Display'; font-size: 1.5rem; color: var(--deep-pink); margin-bottom: 20px;">TEN GOOD QUALITIES OF YOU</h2>
         <div class="envelope-grid" id="main-grid"></div>
-        <div class="scroll-hint">SCROLL MO PA BE ↓</div>
+        <div class="scroll-hint">MESSAGES FOR YOU ↓</div>
     </section>
 
     <div class="letter-overlay" id="overlay" onclick="closeLetter()">
         <div class="letter-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeLetter()">✕</span>
             <img id="letter-photo" class="letter-photo-frame" src="" alt="Lala">
-            <div class="letter-text">
-                <span class="close-btn" onclick="closeLetter()">✕</span>
-                <h2 id="letter-title">Title</h2>
-                <p id="letter-body" style="white-space: pre-line;">Message...</p>
+            <div class="scrollable-area">
+                <div class="letter-text">
+                    <h2 id="letter-title">Title</h2>
+                    <p id="letter-body">Message...</p>
+                </div>
             </div>
         </div>
     </div>
 
-  <section id="flowers">
-    <div style="text-align: center; padding-top: 50px;">
-        <div class="bouquet-wrapper">
-            <div class="flower sunflower f1">
-                <div class="head"><div class="center"></div></div>
-                <div class="flower-stem" style="height:220px"></div>
-            </div>
-            <div class="flower sunflower f2">
-                <div class="head"><div class="center"></div></div>
-                <div class="flower-stem" style="height:220px"></div>
-            </div>
-            <div class="flower sunflower f3">
-                <div class="head" style="width:90px; height:90px;"><div class="center" style="width:35px; height:35px;"></div></div>
-                <div class="flower-stem" style="height:260px"></div>
-            </div>
-            
-            <div class="flower tulip f4">
-                <div class="head"></div>
-                <div class="flower-stem" style="height:150px"></div>
-            </div>
-            <div class="flower tulip f5">
-                <div class="head" style="background:#ce93d8"></div>
-                <div class="flower-stem" style="height:150px"></div>
+    <section id="flowers">
+        <div style="text-align: center; width: 100%;">
+            <div class="bouquet-wrapper">
+                <div class="flower sunflower" style="--rotation: -30deg; z-index: 1;"><div class="head"><div class="center"></div></div><div class="flower-stem" style="height:200px"></div></div>
+                <div class="flower tulip" style="--rotation: -15deg; z-index: 3;"><div class="head"></div><div class="flower-stem" style="height:160px"></div></div>
+                <div class="flower sunflower" style="--rotation: 0deg; z-index: 5;"><div class="head" style="width:80px; height:80px;"><div class="center" style="width:30px; height:30px;"></div></div><div class="flower-stem" style="height:240px"></div></div>
+                <div class="flower tulip" style="--rotation: 15deg; z-index: 3;"><div class="head" style="background:#ce93d8"></div><div class="flower-stem" style="height:160px"></div></div>
+                <div class="flower daisy" style="--rotation: 30deg; z-index: 1;"><div class="head"></div><div class="flower-stem" style="height:190px"></div></div>
+                
+                <div class="bouquet-wrap"></div>
             </div>
 
-            <div class="flower daisy f6">
-                <div class="head"></div>
-                <div class="flower-stem" style="height:130px"></div>
+            <div style="padding: 0 30px;">
+                <p style="max-width: 400px; font-style: italic; margin: 20px auto 0; font-size: 0.9rem;">You have been my best friend and you've been doing a great job... So, let me witness a lot more great qualities of yours.</p>
+                <p style="font-weight: bold; color: #f06292; margin: 10px 0;">Flowers for you! 💐</p>
+                <p style="font-size: 11px; opacity: 0.6;">Hindi pa rin naman maganda gawa ko pero at least sumasayaw sila HAHAHA</p>
             </div>
-            
-            <div class="bouquet-wrap"></div>
         </div>
-
-        <p style="max-width: 400px; font-style: italic; margin: 20px auto 0;">You have been my best friend and you've been doing a great job... So, let me witness a lot more great qualities of yours.</p>
-        <p style="max-width: 400px; font-weight: bold; color: #f06292;">Flowers for you! 💐</p>
-        <p style="max-width: 400px; font-size: 12px; opacity: 0.7;">Hindi pa rin naman maganda gawa ko pero at least sumasayaw sila HAHAHA</p>
-    </div>
-</section>
+    </section>
 
     <script>
         const qualities = [
             [`Caring`, `Given na agad to, mas naaalala mo pa health ko kaysa sa akin. Ikaw pa nagr-remind magpacheck-up. 🤧 Kahit sa iba, lagi mo sila kinakamusta and ur genuinely concern about their well-being. This has been your way para maipakita mo yung love mo sa amin. And siguro if tatanungin sino ang pinaka-caring sa congregation, hindi kami magdadalawang-isip na sabihin na ikaw. Caring ka kahit sa mga study, sa mga titas, sa mga titos, and kahit sa aming mga kaedad mo. Talagang isinabuhay mo ang 1 Corinthians 10:24, kasi palagi kang may care sa iba pero yung pawis mo, ayaw mo punasan 😑. Stay that way, Lala! (except sa pawis)`, `1.jfif`],
             [`Financially Responsible`, `Wala lang, kitang-kita palagi talino sa paggamit ng pera. "If hindi pa kailangan bakit bibili" palagi ang mindset mo. Lahat ng bagay na gusto mo talagang pinag-iipunan mo. And that's a great quality kasi dahil sa pagiging financially responsible mo, natututo ka maging kontento. And yun yung katangian na kailangang-kailangan sa mga huling araw, and you possess that. (Hebrews 13:5) I know na matipid ka sa pera kaya sana tandaan mo na hindi ka magkakautang sa'kin.`, `2.jfif`],
-            [`Serene`, `Hindi ka mabilis magalit sa mga bagay-bagay. Although, tumatahimik ka lang kapag ayaw mo na pero hindi ka kaagad nagagalit. Also, kapag nang-aaway ako sa'yo, hindi ikaw gumaganti ng pagalit din kaya you are the calm in my storm 🤧 Remember this picture? Just an evidence na kahit may karapatan ka magalit, hindi pa rin ikaw ganern. U know I really regret na sabihin dati na hindi kita kaibigan... (I said sumthing like this) Kasi sa totoo lang, u have proven in a lot ways na tunay kitang kaibigan. Kasi embodiment ka ng Proverbs 19:11 e, maunawain kang tao kaya marunong ka magpigil. Pero, I also want to take this time, Lala to apologize for every hurt I have caused you. I know na marami na siya and hindi ko man kaya maibalik iyon pero at least kaya kong mag-improve for you. Because yung serenity na mayroon ka, gusto ko ganoon din ako. Calm and composed even in the face of stressful instances.`, `3.jfif`],
+            [`Serene`, `Hindi ka mabilis magalit sa mga bagay-bagay. Although, tumatahimik ka lang kapag ayaw mo na pero hindi ka kaagad nagalit. Also, kapag nang-aaway ako sa'yo, hindi ikaw gumaganti ng pagalit din kaya you are the calm in my storm 🤧 Remember this picture? Just an evidence na kahit may karapatan ka magalit, hindi pa rin ikaw ganern. U know I really regret na sabihin dati na hindi kita kaibigan... (I said sumthing like this) Kasi sa totoo lang, u have proven in a lot ways na tunay kitang kaibigan. Kasi embodiment ka ng Proverbs 19:11 e, maunawain kang tao kaya marunong ka magpigil. Pero, I also want to take this time, Lala to apologize for every hurt I have caused you. I know na marami na siya and hindi ko man kaya maibalik iyon pero at least kaya kong mag-improve for you. Because yung serenity na mayroon ka, gusto ko ganoon din ako. Calm and composed even in the face of stressful instances.`, `3.jfif`],
             [`Understanding`, `Naaalala ko lagi yung mga times na akala mo ayaw ko makipag-usap pero hindi... You always want na magkaroon ako ng space and you give time para maging okay ako. Side note though, gusto ko kinukulit ako. Pero yung pagiging understanding mo Lala is sobrang helpful dahil it creates a sense of safety for me. Like safe akong mag-open sa'yo, safe akong ipakita kung sino ako sa'yo, safe ako sa'yo. Ganern...`, `4.jfif`],
             [`Optimistic`, `Is this the right term? Basta u always look for the good in people. Hindi ka agad-agad judger kahit maraming kahusga-husga sa akin. I always remember the conversation we had sa store. Kahit sobrang nag-guilty ako kahit ngayon sa mga nagawa ko noon sa buhay ko. And noong inopen ko siya sa'yo sa store, ang sabi mo lang "Dati naman na yun. Ginagawa mo pa rin ba? Hindi naman na, kaya bakit kita lalayuan." Doon ko talaga nasabi na sobrang grabe ka tumingin sa positive side ko. Side note, look at you in this pic, pagod na pagod na sa swimming 😭`, `5.jfif`],
             [`Have a Listening Ear`, `Naalala ko taong 2023-2024 (panahong nilalandi ka araw-araw) sobrang redi mo makinig sa mga kuwento ko. Parang as in lahat ng nangyayari sa buhay ko, redi ka pakinggan. Kahit naman ngayon, ganern ka pa rin pero syempre may limit na tayo. But ur still my confidant kaya thank you doon. (Sana marealize mo rin redi pa rin ako makinig sa lahat ng kuwento mo 👀) Ikaw ang 17:17 friend ko. And I hope na I am also one of your 17:17 friends. I can still be your confidant, Lala. Interested pa rin ako sa mga ganap mo sa life.`, `6.jfif`],
@@ -209,9 +182,9 @@
         qualities.forEach((q, i) => {
             grid.innerHTML += `
                 <div class="envelope" onclick="openLetter(${i})">
-                    <span style="font-size:40px">✉️</span>
-                    <div class="badge">1</div>
-                    <div style="font-size:10px; margin-top:5px">OPEN ME</div>
+                    <span style="font-size:35px">✉️</span>
+                    <div class="badge">${i+1}</div>
+                    <div style="font-size:10px; margin-top:5px; font-weight:bold; color: #f06292;">OPEN ME</div>
                 </div>`;
         });
 
@@ -220,19 +193,13 @@
             document.getElementById('letter-body').innerText = qualities[i][1];
             document.getElementById('letter-photo').src = qualities[i][2];
             document.getElementById('overlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Stop background from scrolling
         }
 
         function closeLetter() {
             document.getElementById('overlay').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable background scrolling
         }
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
