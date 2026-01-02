@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para sa Favorite Person ni Sedneh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root { --soft-pink: #fce4ec; --deep-pink: #f06292; --text-color: #444; }
+        body, html { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; background-color: #faf9f6; color: var(--text-color); overflow-x: hidden; }
+        
+        section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; position: relative; }
+
+        /* Section 1: Intro */
+        .intro-container { display: flex; max-width: 1000px; gap: 50px; align-items: center; flex-wrap: wrap; justify-content: center; }
+        .hero-img { width: 380px; height: 500px; background: #ddd url('number 1 q.jfif') no-repeat center/cover; border-radius: 10px; box-shadow: 15px 15px 0px var(--soft-pink);}
+        .intro-text { max-width: 500px; }
+        .intro-text h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 10px; }
+
+        /* Section 2: Grid */
+        #grid-section { flex-direction: column; background-color: #f4f4f4; text-align: center; }
+        .envelope-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 20px; width: 100%; max-width: 800px; padding: 20px; }
+        .envelope { cursor: pointer; transition: 0.3s; position: relative; background: #ffeb3b; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .envelope:hover { transform: translateY(-10px) rotate(3deg); }
+        .badge { position: absolute; top: -5px; right: -5px; background: #e91e63; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; display: flex; align-items: center; justify-content: center; }
+
+        /* Popup */
+        .letter-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
+        .letter-content { background: white; padding: 30px; border-radius: 20px; display: flex; gap: 25px; max-width: 700px; width: 100%; flex-wrap: wrap; animation: pop 0.4s ease; }
+        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .letter-photo-frame { width: 320px; height: 450px; object-fit: cover; border-radius: 10px; background: #eee; }
+        .letter-text { flex: 1; min-width: 250px; position: relative; }
+        .letter-text h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--deep-pink); margin-top: 0; }
+        .close-btn { position: absolute; top: -10px; right: 0; cursor: pointer; font-size: 1.5rem; }
+
+        /* Section 3: Sunflowers */
+        .flower-container { display: flex; gap: 30px; align-items: flex-end; margin-bottom: 20px; }
+        .sunflower { animation: dance 3s ease-in-out infinite alternate; transform-origin: bottom center; }
+        @keyframes dance { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
+        .flower-head { width: 80px; height: 80px; background: #FFD700; border-radius: 50%; border: 6px dashed #FFA000; position: relative; }
+        .flower-center { width: 30px; height: 30px; background: #5D4037; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .stem { width: 8px; height: 120px; background: #8BC34A; margin: 0 auto; }
+        
+        .scroll-hint { position: absolute; bottom: 20px; right: 20px; font-size: 10px; letter-spacing: 2px; opacity: 0.6; }
+    </style>
+</head>
+<body>
+
+    <section id="intro">
+        <div class="intro-container">
+            <div class="hero-img"></div>
+            <div class="intro-text">
+                <h1>HI, LALAAA!!</h1>
+                <p>Well, hindi ako kasing galing ninyo kapag crafts... That's why I thought of a way na maibibigay ko sa'yo ito but with something I am good at.</p>
+            </div>
+        </div>
+        <div class="scroll-hint">SCROLL MO BE ↓</div>
+    </section>
+
+    <section id="grid-section">
+        <h2 style="font-family: 'Playfair Display';">TEN GOOD QUALITIES OF YOU</h2>
+        <div class="envelope-grid" id="main-grid"></div>
+        <div class="scroll-hint">SCROLL MO PA BE ↓</div>
+    </section>
+
+    <div class="letter-overlay" id="overlay" onclick="closeLetter()">
+        <div class="letter-content" onclick="event.stopPropagation()">
+            <img id="letter-photo" class="letter-photo-frame" src="" alt="Lala">
+            <div class="letter-text">
+                <span class="close-btn" onclick="closeLetter()">✕</span>
+                <h2 id="letter-title">Title</h2>
+                <p id="letter-body" style="white-space: pre-line;">Message...</p>
+            </div>
+        </div>
+    </div>
+
+    <section id="flowers">
+        <div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+            <div class="flower-container">
+                <div class="sunflower"><div class="flower-head"><div class="flower-center"></div></div><div class="stem"></div></div>
+                <div class="sunflower" style="animation-delay: 0.5s;"><div class="flower-head"><div class="flower-center"></div></div><div class="stem"></div></div>
+                <div class="sunflower" style="animation-delay: 1s;"><div class="flower-head"><div class="flower-center"></div></div><div class="stem"></div></div>
+            </div>
+            <p style="max-width: 400px; font-style: italic;">You have been my best friend and you've been doing a great job doing that. So, let me witness a lot more great qualities of yours...</p>
+            <p style="max-width: 400px; font-style: italic;">Flowers for you nga pala hehe</p>
+            <p style="max-width: 400px; font-style: italic;">Hindi pa rin naman maganda drawing ko dito pero at least sumasayaw siya HAHAHA</p>
+        </div>
+    </section>
+
+    <script>
+        const qualities = [
+            [`Caring`, `Given na agad to, mas naaalala mo pa health ko kaysa sa akin. Ikaw pa nagr-remind magpacheck-up. 🤧 Kahit sa iba, lagi mo sila kinakamusta and ur genuinely concern about their well-being.`, `1.jfif`],
+            [`Financially Responsible`, `Wala lang, kitang-kita palagi talino sa paggamit ng pera. If hindi pa kailangan bakit bibili palagi ang mindset mo. I know na matipid ka sa pera kaya sana tandaan mo na hindi ka magkakautang sa'kin.`, `2.jfif`],
+            [`Serene`, `Hindi ka mabilis magalit sa mga bagay-bagay. Although, tumatahimik ka lang kapag ayaw mo na pero hindi ka kaagad nagagalit. Also, kapag nang-aaway ako sa'yo, hindi ikaw gumaganti ng pagalit din kaya you are the calm in my storm 🤧 Remember this picture? Just an evidence na kahit may karapatan ka magalit, hindi pa rin ikaw ganern.`, `3.jfif`],
+            [`Understanding`, `Naaalala ko lagi yung mga times na akala mo ayaw ko makipag-usap pero hindi... You always want na magkaroon ako ng space and you give time para maging okay ako.`, `4.jfif`],
+            [`Optimistic`, `Is this the right term? Basta u always look for the good in people. Hindi ka agad-agad judger kahit maraming kahusga-husga sa akin. Side note, look at you in this pic, pagod na pagod na sa swimming 😭`, `5.jfif`],
+            [`Have a Listening Ear`, `Naalala ko taong 2023-2024 (panahong nilalandi ka araw-araw) sobrang redi mo makinig sa mga kuwento ko. Parang as in lahat ng nangyayari sa buhay ko, redi ka pakinggan. Kahit naman ngayon, ganern ka pa rin pero syempre may limit na tayo. But ur still my confidant kaya thank you doon. (Sana marealize mo rin redi pa rin ako makinig sa lahat ng kuwento mo 👀) Ikaw ang 17:17 friend ko.`, `6.jfif`],
+            [`Obedient`, `And I don't just mean na masunurin ka sa Bible or sa magulang. Anytime na may magpapaalala sa'yo ng mga gagawin, ginagawa mo siya. Parang noong time na pinaalala yung closeness natin, gumawa ka ng action. Nasobrahan man siya noong una pero nung nagpaalala din sa'yo na hindi ka dapat lumayo, u try your hardest naman na hindi na lumayo sa'kin (minsan... charot!)`, `7.jfif`],
+            [`Appreciative`, `U wanna know why I always give you something? Gustong-gusto ko yung ngiti mo everytime may matatanggap ka. May it be pagkain or something na magagamit mo or kahit simpleng flowers lang na pinulot ko kung saan. You always smile and show your appreciation. Parang everytime may ibibigay sa'yo lahat ng tao, sobrang genuine ng tawa and ngiti mo.`, `8.jfif`],
+            [`Ur Firm and Courageous`, `Mahina man paa ni Lala pero matibay siya sa paninindigan. I remember the time na walang kasiguraduhan kung makapag-exam ka noong PSS week natin. Pero pinili mo pa rin PSS. Or yung kuwento nila kuya Pat na sinabi mo talaga sa kaniya na hindi ka na magc-celebrate ng Christmas and New year... Talagang may lakas-loob ka manindigan sa mga bagay na pinaniniwalaan mo. Kitang-kita rin yung tapang noong ikaw yung nagtanong ano meron sa ating dalawa. Hindi ko nga matanong yun ih 😭`, `9.jfif`],
+            [`Ur my Proverbs 27:17`, `Magandang katangian mo 'yan kasi dahil sa'yo gusto ko maging better. Parang nakakahiya naman kung madali para sa akin maglista ng 10 magandang katangian mo tapos katangian ko ang hirap hanapan ng maganda 'di ba?? Also side note, ito yung picture natin na favorite ko.`, `10.jfif`]
+        ];
+
+        const grid = document.getElementById('main-grid');
+        qualities.forEach((q, i) => {
+            grid.innerHTML += `
+                <div class="envelope" onclick="openLetter(${i})">
+                    <span style="font-size:40px">✉️</span>
+                    <div class="badge">1</div>
+                    <div style="font-size:10px; margin-top:5px">OPEN ME</div>
+                </div>`;
+        });
+
+        function openLetter(i) {
+            document.getElementById('letter-title').innerText = qualities[i][0];
+            document.getElementById('letter-body').innerText = qualities[i][1];
+            document.getElementById('letter-photo').src = qualities[i][2];
+            document.getElementById('overlay').style.display = 'flex';
+        }
+
+        function closeLetter() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
