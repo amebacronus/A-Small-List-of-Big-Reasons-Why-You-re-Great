@@ -8,14 +8,13 @@
     <style>
         :root { --soft-pink: #fce4ec; --deep-pink: #f06292; --text-color: #444; }
         
-        /* Basic Setup */
         body, html { 
             margin: 0; padding: 0; font-family: 'Poppins', sans-serif; 
             scroll-behavior: smooth; background-color: #faf9f6; 
             color: var(--text-color); width: 100%; height: 100%;
         }
 
-        /* Lock Screen - Fixed for iOS dynamic bars */
+        /* Lock Screen */
         #lock-screen {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             width: 100%; height: 100%; background: #faf9f6; z-index: 9999;
@@ -26,136 +25,144 @@
             box-shadow: 0 10px 30px rgba(240, 98, 146, 0.15);
             text-align: center; width: 80%; max-width: 320px;
         }
-        .lock-container h2 { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--deep-pink); margin: 0 0 15px 0; }
         .lock-container input {
             width: 100%; padding: 14px; border: 2px solid var(--soft-pink);
             border-radius: 12px; outline: none; text-align: center;
-            font-size: 16px; /* Prevents iOS auto-zoom on focus */
-            margin-bottom: 15px; box-sizing: border-box; appearance: none;
+            font-size: 16px; margin-bottom: 15px; box-sizing: border-box;
         }
         .lock-container button {
             background: var(--deep-pink); color: white; border: none;
-            padding: 14px; border-radius: 12px; cursor: pointer;
-            font-weight: bold; width: 100%; font-size: 1rem;
-            -webkit-tap-highlight-color: transparent;
+            padding: 14px; border-radius: 12px; width: 100%; font-weight: bold;
         }
 
         #main-content { display: none; opacity: 0; transition: opacity 0.8s ease; }
 
-        /* Sections */
         section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; box-sizing: border-box; }
         
-        /* Hero Section */
         .hero-img { 
             width: 85vw; max-width: 320px; height: 380px; 
             background: #ddd url('number 1 q.jfif') no-repeat center/cover; 
             border-radius: 20px; box-shadow: 10px 10px 0px var(--soft-pink);
             margin-bottom: 25px;
         }
-        .intro-text h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0 0 10px 0; text-align: center; }
-        .intro-text p { font-size: 0.9rem; line-height: 1.6; text-align: center; max-width: 400px; }
 
-        /* Grid */
-        #grid-section { background-color: #fef7f9; }
         .envelope-grid { 
             display: grid; grid-template-columns: repeat(2, 1fr); 
-            gap: 12px; width: 100%; max-width: 450px; margin-top: 20px;
+            gap: 12px; width: 100%; max-width: 450px;
         }
         .envelope { 
             background: #fff9c4; padding: 20px 10px; border-radius: 15px; 
             text-align: center; border: 1px solid #fff59d; cursor: pointer;
-            position: relative; -webkit-tap-highlight-color: transparent;
+            position: relative;
         }
-        .envelope:active { transform: scale(0.95); }
         .badge { 
             position: absolute; top: 8px; right: 8px; background: var(--deep-pink); 
             color: white; border-radius: 50%; width: 20px; height: 20px; 
             font-size: 10px; display: flex; align-items: center; justify-content: center;
         }
 
-        /* Letter Popup - iOS Scroll Fix */
+        /* FIXED SCROLLABLE POPUP FOR IOS/ANDROID */
         .letter-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.85); display: none; 
-            justify-content: center; align-items: center; z-index: 9999; padding: 15px;
+            justify-content: center; align-items: center; z-index: 10000; padding: 20px;
             box-sizing: border-box;
         }
         .letter-content { 
             background: white; border-radius: 25px; width: 100%; max-width: 400px; 
-            max-height: 85vh; overflow: hidden; display: flex; flex-direction: column;
-            position: relative; animation: pop 0.3s ease-out;
+            max-height: 80vh; /* Limits height to allow scrolling */
+            display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
+            animation: pop 0.3s ease-out;
         }
+        .letter-photo-frame { width: 100%; height: 200px; min-height: 200px; object-fit: cover; }
+        
         .scrollable-body { 
-            overflow-y: auto; padding: 20px; 
-            -webkit-overflow-scrolling: touch; /* Critical for iOS smoothness */
+            flex: 1;
+            overflow-y: auto; 
+            padding: 20px;
+            -webkit-overflow-scrolling: touch; /* Smooth scroll for iOS */
         }
-        .letter-photo-frame { width: 100%; height: 250px; object-fit: cover; border-radius: 15px 15px 0 0; }
-        .letter-text h2 { font-family: 'Dancing Script', cursive; color: var(--deep-pink); margin-top: 0; }
         .close-btn { 
-            position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.4); 
+            position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); 
             color: white; width: 30px; height: 30px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; z-index: 10;
+            display: flex; align-items: center; justify-content: center; z-index: 11;
         }
 
-        /* Bouquet */
-        .bouquet-wrapper { position: relative; height: 350px; width: 250px; margin: 20px auto; transform: scale(0.85); }
-        .bouquet-wrap { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 70px; height: 80px; background: #d7ccc8; clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%); z-index: 10; }
-        .flower { position: absolute; bottom: 30px; left: 50%; transform-origin: bottom center; animation: sway 3s ease-in-out infinite alternate; }
-        .flower-stem { width: 4px; background: #689f38; border-radius: 5px; }
-        .sunflower .head { width: 60px; height: 60px; background: #FFD700; border-radius: 50%; border: 4px dashed #FFA000; display: flex; align-items: center; justify-content: center; }
-        .sunflower .center { width: 22px; height: 22px; background: #5D4037; border-radius: 50%; }
-        .tulip .head { width: 30px; height: 40px; background: #ff8a80; border-radius: 50% 50% 40% 40%; }
-        .daisy .head { width: 30px; height: 30px; background: white; border-radius: 50%; border: 3px dotted #FFEB3B; }
+        /* THE UPDATED BOUQUET */
+        .bouquet-wrapper { position: relative; height: 380px; width: 300px; margin: 20px auto; }
+        .pot { 
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); 
+            width: 80px; height: 90px; background: #d7ccc8; 
+            clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%); z-index: 20; 
+        }
         
+        .flower { position: absolute; bottom: 40px; left: 50%; transform-origin: bottom center; animation: sway 3s ease-in-out infinite alternate; }
+        .stem { width: 5px; background: #689f38; border-radius: 5px; margin: 0 auto; }
+        
+        /* Main Sunflower */
+        .sun-main .head { width: 80px; height: 80px; background: #FFD700; border-radius: 50%; border: 5px dashed #FFA000; display: flex; align-items: center; justify-content: center; }
+        .sun-main .center { width: 30px; height: 30px; background: #5D4037; border-radius: 50%; }
+        
+        /* Secondary Flowers */
+        .tulip .head { width: 35px; height: 45px; background: #ff8a80; border-radius: 50% 50% 40% 40%; }
+        .daisy .head { width: 40px; height: 40px; background: white; border-radius: 50%; border: 3px dotted #FFEB3B; }
+        .lavender .head { width: 15px; height: 50px; background: #b39ddb; border-radius: 20px; }
+
         @keyframes sway { 
             from { transform: translateX(-50%) rotate(calc(var(--rotation) - 2deg)); } 
             to { transform: translateX(-50%) rotate(calc(var(--rotation) + 2deg)); } 
         }
         @keyframes pop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        @media (min-width: 600px) {
-            .envelope-grid { grid-template-columns: repeat(5, 1fr); max-width: 800px; }
-        }
+        @media (min-width: 600px) { .envelope-grid { grid-template-columns: repeat(5, 1fr); max-width: 800px; } }
     </style>
 </head>
 <body>
 
     <div id="lock-screen">
         <div class="lock-container">
-            <h2>Secret Message</h2>
-            <input type="password" id="passwordInput" placeholder="Enter Password" autocomplete="off">
+            <h2 style="font-family: 'Dancing Script'; color: var(--deep-pink);">Secret Message</h2>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
             <button onclick="checkPassword()">Unlock</button>
-            <p id="error-msg" style="color: #f06292; font-size: 12px; margin-top: 10px; display: none;">Hmm... Alalahanin mo nickname mo sa'kin dati! 🥺</p>
+            <p id="error-msg" style="color: #f06292; font-size: 12px; margin-top: 10px; display: none;">Alalahanin mo nickname mo sa'kin dati! 🥺</p>
         </div>
     </div>
 
     <div id="main-content">
         <section id="intro">
             <div class="hero-img"></div>
-            <div class="intro-text">
-                <h1>HI, LALAAA!!</h1>
-                <p>Hindi ako kasing galing ninyo sa crafts... That's why I thought of a way na maibibigay ko sa'yo ito but with something I am good at.. Hope you like it!</p>
-                <p>Nabasa mo na yung nasa taas before ko pa maibigay ih 😣... I'll try to always update this site to keep our memories here na lang (Sana hindi tamarin).</p>
+            <div class="intro-text" style="text-align:center;">
+                <h1 style="font-family: 'Playfair Display';">HI, LALAAA!!</h1>
+                <p style="font-size: 0.9rem; max-width: 300px;">Hope you like this digital bouquet and the little notes I prepared for you!</p>
             </div>
             <p style="font-size: 10px; margin-top: 30px; color: var(--deep-pink);">SCROLL DOWN ↓</p>
         </section>
 
         <section id="grid-section">
-            <h2 style="font-family: 'Playfair Display'; font-size: 1.4rem;">10 THINGS ABOUT YOU</h2>
+            <h2 style="font-family: 'Playfair Display'; margin-bottom: 20px;">10 THINGS ABOUT YOU</h2>
             <div class="envelope-grid" id="main-grid"></div>
         </section>
 
         <section id="flowers">
             <div class="bouquet-wrapper">
-                <div class="flower sunflower" style="--rotation: -25deg; z-index: 1;"><div class="head"><div class="center"></div></div><div class="flower-stem" style="height:180px"></div></div>
-                <div class="flower tulip" style="--rotation: 0deg; z-index: 5;"><div class="head"></div><div class="flower-stem" style="height:220px"></div></div>
-                <div class="flower daisy" style="--rotation: 25deg; z-index: 1;"><div class="head"></div><div class="flower-stem" style="height:180px"></div></div>
-                <div class="bouquet-wrap"></div>
+                <div class="flower lavender" style="--rotation: -35deg; z-index: 1;"><div class="head"></div><div class="stem" style="height:200px"></div></div>
+                <div class="flower daisy" style="--rotation: 30deg; z-index: 1;"><div class="head"></div><div class="stem" style="height:190px"></div></div>
+                
+                <div class="flower tulip" style="--rotation: -15deg; z-index: 10;"><div class="head"></div><div class="stem" style="height:210px"></div></div>
+                <div class="flower tulip" style="--rotation: 15deg; z-index: 10;"><div class="head" style="background: #f48fb1;"></div><div class="stem" style="height:210px"></div></div>
+                
+                <div class="flower sun-main" style="--rotation: 0deg; z-index: 15;">
+                    <div class="head"><div class="center"></div></div>
+                    <div class="stem" style="height:230px"></div>
+                </div>
+                
+                <div class="pot"></div>
             </div>
+            
             <div style="text-align: center; padding: 0 20px;">
-                <p style="font-style: italic; font-size: 0.9rem;">You're my best friend and you have done a great job doing that! Kahit na palagi kitang inaaway because of my own insecurity, you still stay by my side. I want to be better for you, Lala! I want to stay by your side forever to witness every quality you will possess, both good and bad.</p>
-                <p style="font-weight: bold; color: var(--deep-pink);">Flowers for you! 💐</p>
-                 <p style="font-style: italic; font-size: 0.5rem;">Hindi pa rin naman maganda gawa ko pero at least sumasayaw sila HAHAHA</p>
+                <p style="font-weight: bold; color: var(--deep-pink);">A bouquet for my favorite person! 💐</p>
+                <p style="font-style: italic; font-size: 0.8rem; max-width: 320px;">"The sunflower is my favorite because it always looks for the light, just like how you bring light into my life."</p>
             </div>
         </section>
     </div>
@@ -165,46 +172,36 @@
             <span class="close-btn" onclick="closeLetter()">✕</span>
             <img id="letter-photo" class="letter-photo-frame" src="">
             <div class="scrollable-body">
-                <div class="letter-text">
-                    <h2 id="letter-title"></h2>
-                    <p id="letter-body" style="white-space: pre-line;"></p>
-                </div>
+                <h2 id="letter-title" style="font-family: 'Dancing Script'; color: var(--deep-pink); margin-top:0;"></h2>
+                <p id="letter-body" style="white-space: pre-line; line-height: 1.6; font-size: 0.95rem;"></p>
             </div>
         </div>
     </div>
 
     <script>
-        // Password logic
         function checkPassword() {
             const input = document.getElementById('passwordInput').value;
-            const correctPass = "smilesupplier"; 
-            if (input === correctPass) {
+            if (input.toLowerCase() === "smilesupplier") {
                 document.getElementById('lock-screen').style.display = 'none';
                 const main = document.getElementById('main-content');
                 main.style.display = 'block';
                 setTimeout(() => main.style.opacity = '1', 50);
             } else {
                 document.getElementById('error-msg').style.display = 'block';
-                document.getElementById('passwordInput').value = "";
             }
         }
 
-        // Handle Enter key
-        document.getElementById('passwordInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') checkPassword();
-        });
-
         const qualities = [
-            [`Caring`, `Given na agad to, mas naaalala mo pa health ko kaysa sa akin. Ikaw pa nagr-remind magpacheck-up. 🤧 Kahit sa iba, lagi mo sila kinakamusta...`, `1.jfif`],
-            [`Financially Responsible`, `Wala lang, kitang-kita palagi talino sa paggamit ng pera. "If hindi pa kailangan bakit bibili" palagi ang mindset mo...`, `2.jfif`],
-            [`Serene`, `Hindi ka mabilis magalit sa mga bagay-bagay. You are the calm in my storm 🤧`, `3.jfif`],
-            [`Understanding`, `You always want na magkaroon ako ng space and you give time para maging okay ako. Safe ako sa'yo.`, `4.jfif`],
-            [`Optimistic`, `U always look for the good in people. Hindi ka agad-agad judger kahit maraming kahusga-husga sa akin.`, `5.jfif`],
-            [`Listening Ear`, `Sobrang redi mo makinig sa mga kuwento ko. Ikaw ang 17:17 friend ko.`, `6.jfif`],
-            [`Obedient`, `Masunurin sa Bible at magulang. Anytime na may magpapaalala sa'yo, ginagawa mo siya.`, `7.jfif`],
-            [`Appreciative`, `Gustong-gusto ko yung ngiti mo everytime may matatanggap ka. You always show your appreciation.`, `8.jfif`],
-            [`Firm & Courageous`, `Matibay sa paninindigan. Talagang may lakas-loob ka manindigan sa mga bagay na pinaniniwalaan mo.`, `9.jfif`],
-            [`My Proverbs 27:17`, `Dahil sa'yo gusto ko maging better. Ito yung picture natin na favorite ko.`, `10.jfif`]
+            [`Caring`, `Given na agad to, mas naaalala mo pa health ko kaysa sa akin. Ikaw pa nagr-remind magpacheck-up. 🤧 Kahit sa iba, lagi mo sila kinakamusta and ur genuinely concern about their well-being. This has been your way para maipakita mo yung love mo sa amin. And siguro if tatanungin sino ang pinaka-caring sa congregation, hindi kami magdadalawang-isip na sabihin na ikaw. Caring ka kahit sa mga study, sa mga titas, sa mga titos, and kahit sa aming mga kaedad mo. Talagang isinabuhay mo ang 1 Corinthians 10:24, kasi palagi kang may care sa iba pero yung pawis mo, ayaw mo punasan 😑. Stay that way, Lala! (except sa pawis)`, `1.jfif`],
+            [`Financially Responsible`, `Wala lang, kitang-kita palagi talino sa paggamit ng pera. "If hindi pa kailangan bakit bibili" palagi ang mindset mo. Lahat ng bagay na gusto mo talagang pinag-iipunan mo. And that's a great quality kasi dahil sa pagiging financially responsible mo, natututo ka maging kontento. And yun yung katangian na kailangang-kailangan sa mga huling araw, and you possess that. (Hebrews 13:5) I know na matipid ka sa pera kaya sana tandaan mo na hindi ka magkakautang sa'kin.`, `2.jfif`],
+            [`Serene`, `Hindi ka mabilis magalit sa mga bagay-bagay. Although, tumatahimik ka lang kapag ayaw mo na pero hindi ka kaagad nagalit. Also, kapag nang-aaway ako sa'yo, hindi ikaw gumaganti ng pagalit din kaya you are the calm in my storm 🤧 Remember this picture? Just an evidence na kahit may karapatan ka magalit, hindi pa rin ikaw ganern. U know I really regret na sabihin dati na hindi kita kaibigan... (I said sumthing like this) Kasi sa totoo lang, u have proven in a lot ways na tunay kitang kaibigan. Kasi embodiment ka ng Proverbs 19:11 e, maunawain kang tao kaya marunong ka magpigil. Pero, I also want to take this time, Lala to apologize for every hurt I have caused you. I know na marami na siya and hindi ko man kaya maibalik iyon pero at least kaya kong mag-improve for you. Because yung serenity na mayroon ka, gusto ko ganoon din ako. Calm and composed even in the face of stressful instances.`, `3.jfif`],
+            [`Understanding`, `Naaalala ko lagi yung mga times na akala mo ayaw ko makipag-usap pero hindi... You always want na magkaroon ako ng space and you give time para maging okay ako. Side note though, gusto ko kinukulit ako. Pero yung pagiging understanding mo Lala is sobrang helpful dahil it creates a sense of safety for me. Like safe akong mag-open sa'yo, safe akong ipakita kung sino ako sa'yo, safe ako sa'yo. Ganern...`, `4.jfif`],
+            [`Optimistic`, `Is this the right term? Basta u always look for the good in people. Hindi ka agad-agad judger kahit maraming kahusga-husga sa akin. I always remember the conversation we had sa store. Kahit sobrang nag-guilty ako kahit ngayon sa mga nagawa ko noon sa buhay ko. And noong inopen ko siya sa'yo sa store, ang sabi mo lang "Dati naman na yun. Ginagawa mo pa rin ba? Hindi naman na, kaya bakit kita lalayuan." Doon ko talaga nasabi na sobrang grabe ka tumingin sa positive side ko. Side note, look at you in this pic, pagod na pagod na sa swimming 😭`, `5.jfif`],
+            [`Have a Listening Ear`, `Naalala ko taong 2023-2024 (panahong nilalandi ka araw-araw) sobrang redi mo makinig sa mga kuwento ko. Parang as in lahat ng nangyayari sa buhay ko, redi ka pakinggan. Kahit naman ngayon, ganern ka pa rin pero syempre may limit na tayo. But ur still my confidant kaya thank you doon. (Sana marealize mo rin redi pa rin ako makinig sa lahat ng kuwento mo 👀) Ikaw ang 17:17 friend ko. And I hope na I am also one of your 17:17 friends. I can still be your confidant, Lala. Interested pa rin ako sa mga ganap mo sa life.`, `6.jfif`],
+            [`Obedient`, `And I don't just mean na masunurin ka sa Bible or sa magulang. Anytime na may magpapaalala sa'yo ng mga gagawin, ginagawa mo siya. Parang noong time na pinaalala yung closeness natin, gumawa ka ng action. Nasobrahan man siya noong una pero nung nagpaalala din sa'yo na hindi ka dapat lumayo, u try your hardest naman na hindi na lumayo sa'kin (minsan... charot!) Ang qt ng picture natin dito no? Sana madagdagan 👀. Kaya siguro cravings ko makapagpa-picture sayo HAHAHAHA`, `7.jfif`],
+            [`Appreciative`, `U wanna know why I always give you something? Gustong-gusto ko yung ngiti mo everytime may matatanggap ka. May it be pagkain or something na magagamit mo or kahit simpleng flowers lang na pinulot ko kung saan. You always smile and show your appreciation. Parang everytime may ibibigay sa'yo lahat ng tao, sobrang genuine ng tawa and ngiti mo. Ikaw ang pinakamadaling pakiligin and pasayahin. Kasi kahit sa maliit na bagay, natutuwa ka na. Pero hindi ko pa rin mahuli mga jokes na matatawa ka 😖`, `8.jfif`],
+            [`Ur Firm and Courageous`, `Mahina man paa ni Lala pero matibay siya sa paninindigan. I remember the time na walang kasiguraduhan kung makapag-exam ka noong PSS week natin. Pero pinili mo pa rin PSS. Or yung kuwento nila kuya Pat na sinabi mo talaga sa kaniya na hindi ka na magc-celebrate ng Christmas and New year... Talagang may lakas-loob ka manindigan sa mga bagay na pinaniniwalaan mo. Kitang-kita rin yung tapang noong ikaw yung nagtanong ano meron sa ating dalawa. Hindi ko nga matanong yun ih 😭`, `9.jfif`],
+            [`Ur my Proverbs 27:17`, `Magandang katangian mo 'yan kasi dahil sa'yo gusto ko maging better. Parang nakakahiya naman kung madali para sa akin maglista ng 10 magandang katangian mo tapos katangian ko ang hirap hanapan ng maganda 'di ba?? Also side note, ito yung picture natin na favorite ko. Marami pa akong keri ibigay na magandang katangian mo... pero tsaka na.`, `10.jfif`]
         ];
 
         const grid = document.getElementById('main-grid');
@@ -213,7 +210,7 @@
                 <div class="envelope" onclick="openLetter(${i})">
                     <span style="font-size:30px">✉️</span>
                     <div class="badge">${i+1}</div>
-                    <div style="font-size:9px; font-weight:bold; color:#f06292; margin-top:5px;">TAP</div>
+                    <div style="font-size:9px; font-weight:bold; color:#f06292; margin-top:5px;">OPEN</div>
                 </div>`;
         });
 
@@ -222,7 +219,7 @@
             document.getElementById('letter-body').innerText = qualities[i][1];
             document.getElementById('letter-photo').src = qualities[i][2];
             document.getElementById('overlay').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; // Prevents background scroll
         }
 
         function closeLetter() {
