@@ -25,20 +25,60 @@
             box-shadow: 0 10px 30px rgba(240, 98, 146, 0.15);
             text-align: center; width: 80%; max-width: 320px;
         }
-        .lock-container input {
-            width: 100%; padding: 14px; border: 2px solid var(--soft-pink);
-            border-radius: 12px; outline: none; text-align: center;
-            font-size: 16px; margin-bottom: 15px; box-sizing: border-box;
+
+        /* Password Wrapper for Icon */
+        .pass-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
         }
+        .lock-container input {
+            width: 100%; padding: 14px 45px 14px 14px; border: 2px solid var(--soft-pink);
+            border-radius: 12px; outline: none; text-align: center;
+            font-size: 16px; box-sizing: border-box;
+        }
+        .toggle-eye {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--deep-pink);
+            display: flex;
+            align-items: center;
+        }
+        .toggle-eye svg { width: 22px; height: 22px; }
+
         .lock-container button {
             background: var(--deep-pink); color: white; border: none;
-            padding: 14px; border-radius: 12px; width: 100%; font-weight: bold;
+            padding: 14px; border-radius: 12px; width: 100%; font-weight: bold; cursor: pointer;
         }
 
         #main-content { display: none; opacity: 0; transition: opacity 0.8s ease; }
 
         section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; box-sizing: border-box; }
         
+        /* Memory Vault Section */
+        #vault-section { background-color: #fff; width: 100%; padding: 60px 20px; }
+        .vault-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px; width: 100%; max-width: 900px; margin-top: 30px;
+        }
+        .vault-card {
+            background: #fafafa; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;
+            text-decoration: none; color: inherit; border: 1px solid #eee; text-align: left;
+        }
+        .vault-card:active { transform: scale(0.98); }
+        .vault-img-placeholder {
+            width: 100%; height: 150px; background: #eee;
+            display: flex; align-items: center; justify-content: center;
+            color: #bbb; font-size: 0.8rem; background-position: center; background-size: cover;
+        }
+        .vault-info { padding: 15px; }
+        .vault-info h3 { margin: 0; font-family: 'Playfair Display'; color: var(--deep-pink); font-size: 1.1rem; }
+        .vault-info p { font-size: 0.8rem; margin: 5px 0 0; color: #777; }
+
         .hero-img { 
             width: 85vw; max-width: 320px; height: 380px; 
             background: #ddd url('number 1 q.jfif') no-repeat center/cover; 
@@ -70,51 +110,26 @@
         }
         .letter-content { 
             background: white; border-radius: 25px; width: 100%; max-width: 400px; 
-            max-height: 80vh; /* Limits height to allow scrolling */
-            display: flex; flex-direction: column;
-            position: relative; overflow: hidden;
-            animation: pop 0.3s ease-out;
+            max-height: 80vh; display: flex; flex-direction: column;
+            position: relative; overflow: hidden; animation: pop 0.3s ease-out;
         }
-        .letter-photo-frame { width: 100%; height: 200px; min-height: 200px; object-fit: cover; }
-        
-        .scrollable-body { 
-            flex: 1;
-            overflow-y: auto; 
-            padding: 20px;
-            -webkit-overflow-scrolling: touch; /* Smooth scroll for iOS */
-        }
-        .close-btn { 
-            position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); 
-            color: white; width: 30px; height: 30px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; z-index: 11;
-        }
+        .letter-photo-frame { width: 100%; height: 350px; min-height: 350px; object-fit: cover; }
+        .scrollable-body { flex: 1; overflow-y: auto; padding: 20px; -webkit-overflow-scrolling: touch; }
+        .close-btn { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 11; }
 
         /* THE UPDATED BOUQUET */
         .bouquet-wrapper { position: relative; height: 380px; width: 300px; margin: 20px auto; }
-        .pot { 
-            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); 
-            width: 80px; height: 90px; background: #d7ccc8; 
-            clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%); z-index: 20; 
-        }
-        
+        .pot { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 90px; background: #d7ccc8; clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%); z-index: 20; }
         .flower { position: absolute; bottom: 40px; left: 50%; transform-origin: bottom center; animation: sway 3s ease-in-out infinite alternate; }
         .stem { width: 5px; background: #689f38; border-radius: 5px; margin: 0 auto; }
-        
-        /* Main Sunflower */
         .sun-main .head { width: 80px; height: 80px; background: #FFD700; border-radius: 50%; border: 5px dashed #FFA000; display: flex; align-items: center; justify-content: center; }
         .sun-main .center { width: 30px; height: 30px; background: #5D4037; border-radius: 50%; }
-        
-        /* Secondary Flowers */
         .tulip .head { width: 35px; height: 45px; background: #ff8a80; border-radius: 50% 50% 40% 40%; }
         .daisy .head { width: 40px; height: 40px; background: white; border-radius: 50%; border: 3px dotted #FFEB3B; }
         .lavender .head { width: 15px; height: 50px; background: #b39ddb; border-radius: 20px; }
 
-        @keyframes sway { 
-            from { transform: translateX(-50%) rotate(calc(var(--rotation) - 2deg)); } 
-            to { transform: translateX(-50%) rotate(calc(var(--rotation) + 2deg)); } 
-        }
+        @keyframes sway { from { transform: translateX(-50%) rotate(calc(var(--rotation) - 2deg)); } to { transform: translateX(-50%) rotate(calc(var(--rotation) + 2deg)); } }
         @keyframes pop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
         @media (min-width: 600px) { .envelope-grid { grid-template-columns: repeat(5, 1fr); max-width: 800px; } }
     </style>
 </head>
@@ -122,8 +137,21 @@
 
     <div id="lock-screen">
         <div class="lock-container">
-            <h2 style="font-family: 'Dancing Script'; color: var(--deep-pink);">Kung hindi ikaw si Mhikay, exit mo na hehe</h2>
-            <input type="password" id="passwordInput" placeholder="Enter Password (no caps, no spaces)">
+            <h2 style="font-family: 'Dancing Script'; color: var(--deep-pink); font-size: 1.2rem;">Kung hindi ikaw si Mhikay, exit mo na hehe</h2>
+            
+            <div class="pass-wrapper">
+                <input type="password" id="passwordInput" placeholder="Enter Password (no caps, no spaces)">
+                <div class="toggle-eye" id="toggleEye" onclick="togglePassword()">
+                    <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    <svg id="eyeClosed" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                    </svg>
+                </div>
+            </div>
+
             <button onclick="checkPassword()">Unlock</button>
             <p id="error-msg" style="color: #f06292; font-size: 12px; margin-top: 10px; display: none;">Alalahanin mo nickname mo sa'kin dati! 🥺</p>
         </div>
@@ -134,10 +162,30 @@
             <div class="hero-img"></div>
             <div class="intro-text" style="text-align:center;">
                 <h1 style="font-family: 'Playfair Display';">HI, LALAAA!!</h1>
-                <p style="font-size: 1.5rem; max-width: 300px;">Well, hindi ako kasing galing ninyo sa paggawa crafts... That's why I thought of a way na maibibigay ko sa'yo ito but with something I am good at.</p>
-                 <p style="font-size: 10px; max-width: 300px; opacity: 0.6;">Nabasa mo na yung nasa taas before ko pa maibigay ih 😣... I'll try to always update this site to keep our memories here na lang (Sana hindi tamarin).</p>
+                <p style="font-size: 1.1rem; max-width: 300px; margin: 0 auto;">Well, hindi ako kasing galing ninyo sa paggawa crafts... That's why I thought of a way na maibibigay ko sa'yo ito but with something I am good at.</p>
+                 <p style="font-size: 10px; max-width: 300px; opacity: 0.6; margin: 15px auto;">Nabasa mo na yung nasa taas before ko pa maibigay ih 😣... I'll try to always update this site to keep our memories here na lang.</p>
             </div>
             <p style="font-size: 10px; margin-top: 30px; color: var(--deep-pink);">SCROLL DOWN ↓</p>
+        </section>
+
+        <section id="vault-section">
+            <h2 style="font-family: 'Playfair Display'; text-align: center;">MEMORY VAULT</h2>
+            <div class="vault-grid">
+                <a href="#" class="vault-card">
+                    <div class="vault-img-placeholder">[Picture Placeholder]</div>
+                    <div class="vault-info">
+                        <h3>Our Collection</h3>
+                        <p>I'm thinking if this where should I store our pictures?</p>
+                    </div>
+                </a>
+                <a href="#" class="vault-card">
+                    <div class="vault-img-placeholder">[Another Placeholder]</div>
+                    <div class="vault-info">
+                        <h3>Not sure what to do with this pa</h3>
+                        <p>What do you think ang dapat kong ilagay dito?</p>
+                    </div>
+                </a>
+            </div>
         </section>
 
         <section id="grid-section">
@@ -149,18 +197,11 @@
             <div class="bouquet-wrapper">
                 <div class="flower lavender" style="--rotation: -35deg; z-index: 1;"><div class="head"></div><div class="stem" style="height:200px"></div></div>
                 <div class="flower daisy" style="--rotation: 30deg; z-index: 1;"><div class="head"></div><div class="stem" style="height:190px"></div></div>
-                
                 <div class="flower tulip" style="--rotation: -15deg; z-index: 10;"><div class="head"></div><div class="stem" style="height:210px"></div></div>
                 <div class="flower tulip" style="--rotation: 15deg; z-index: 10;"><div class="head" style="background: #f48fb1;"></div><div class="stem" style="height:210px"></div></div>
-                
-                <div class="flower sun-main" style="--rotation: 0deg; z-index: 15;">
-                    <div class="head"><div class="center"></div></div>
-                    <div class="stem" style="height:230px"></div>
-                </div>
-                
+                <div class="flower sun-main" style="--rotation: 0deg; z-index: 15;"><div class="head"><div class="center"></div></div><div class="stem" style="height:230px"></div></div>
                 <div class="pot"></div>
             </div>
-            
             <div style="text-align: center; padding: 0 20px;">
                 <p style="max-width: 400px; font-style: italic; margin: 20px auto 0; font-size: 0.9rem;">You have been my best friend and you've been doing a great job... So, let me witness a lot more great qualities of yours.</p>
                 <p style="font-weight: bold; color: #f06292; margin: 10px 0;">Flowers for you! 💐</p>
@@ -181,6 +222,22 @@
     </div>
 
     <script>
+        function togglePassword() {
+            const passInput = document.getElementById("passwordInput");
+            const eyeOpen = document.getElementById("eyeOpen");
+            const eyeClosed = document.getElementById("eyeClosed");
+            
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                eyeOpen.style.display = "none";
+                eyeClosed.style.display = "block";
+            } else {
+                passInput.type = "password";
+                eyeOpen.style.display = "block";
+                eyeClosed.style.display = "none";
+            }
+        }
+
         function checkPassword() {
             const input = document.getElementById('passwordInput').value;
             if (input.toLowerCase() === "smilesupplier") {
@@ -193,7 +250,7 @@
             }
         }
 
-        const qualities = [
+         const qualities = [
             [`Caring`, `Given na agad to, mas naaalala mo pa health ko kaysa sa akin. Ikaw pa nagr-remind magpacheck-up. 🤧 Kahit sa iba, lagi mo sila kinakamusta and ur genuinely concern about their well-being. This has been your way para maipakita mo yung love mo sa amin. And siguro if tatanungin sino ang pinaka-caring sa congregation, hindi kami magdadalawang-isip na sabihin na ikaw. Caring ka kahit sa mga study, sa mga titas, sa mga titos, and kahit sa aming Circle of Friends mo. Talagang isinabuhay mo ang 1 Corinthians 10:24, kasi palagi kang may care sa iba pero yung pawis mo, ayaw mo punasan 😑. Stay that way, Lala! (except sa pawis)`, `1.jfif`],
             [`Financially Responsible`, `Wala lang, kitang-kita palagi talino sa paggamit ng pera. "If hindi pa kailangan bakit bibili" palagi ang mindset mo. Lahat ng bagay na gusto mo, talagang pinag-iipunan mo. And that's a great quality kasi dahil sa pagiging financially responsible mo, natututo ka maging kontento. And yun yung katangian na kailangang-kailangan sa mga huling araw, and you possess that. (Hebrews 13:5) I know na matipid ka sa pera kaya sana tandaan mo na hindi ka magkakautang sa'kin. Kaya lahat ng "utang" na binabayad mo sa akin ay nakalagay lang sa piggy bank 😭... para sa future natin 👀...`, `2.jfif`],
             [`Serene`, `Hindi ka mabilis magalit sa mga bagay-bagay. Although, tumatahimik ka lang kapag ayaw mo na pero hindi ka kaagad nagagalit. Also, kapag nang-aaway ako sa'yo, hindi ikaw gumaganti ng pagalit din kaya you are the calm in my storm 🤧 Remember this picture? Just an evidence na kahit may karapatan ka magalit, hindi pa rin ikaw ganern. U know I really regret na sabihin dati na hindi kita kaibigan... (I said sumthing like this) Kasi sa totoo lang, u have proven in a lot ways na tunay kitang kaibigan. Kasi embodiment ka ng Proverbs 19:11 e, maunawain kang tao kaya marunong ka magpigil. Kaya I also want to take this time, Lala to apologize for every hurt I have caused you. I know na marami na siya and hindi ko man kaya maibalik iyon pero at least kaya kong mag-improve for you. Because yung serenity na mayroon ka, gusto ko ganoon din ako. Calm and composed even in the face of stressful instances.`, `3.jfif`],
@@ -208,12 +265,11 @@
 
         const grid = document.getElementById('main-grid');
         qualities.forEach((q, i) => {
-            grid.innerHTML += `
-                <div class="envelope" onclick="openLetter(${i})">
-                    <span style="font-size:30px">✉️</span>
-                    <div class="badge">${i+1}</div>
-                    <div style="font-size:9px; font-weight:bold; color:#f06292; margin-top:5px;">OPEN</div>
-                </div>`;
+            grid.innerHTML += `<div class="envelope" onclick="openLetter(${i})">
+                <span style="font-size:30px">✉️</span>
+                <div class="badge">${i+1}</div>
+                <div style="font-size:9px; font-weight:bold; color:#f06292; margin-top:5px;">OPEN</div>
+            </div>`;
         });
 
         function openLetter(i) {
@@ -221,7 +277,7 @@
             document.getElementById('letter-body').innerText = qualities[i][1];
             document.getElementById('letter-photo').src = qualities[i][2];
             document.getElementById('overlay').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Prevents background scroll
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLetter() {
@@ -231,10 +287,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
